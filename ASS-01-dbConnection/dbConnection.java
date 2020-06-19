@@ -1,21 +1,16 @@
 import java.sql.*;
 import java.util.Scanner;
 
-
 public class dbConnection {
     public static class Details{
-      String id,name,address,tel;
+        String id,name,address,tel;
     }
     private static final Details d = new Details();
     public static void main(String[] args) {
-
         System.out.println("Enter Data-->>format{CUS01 Sarath No.231,Mahagma 0714561237}");
         getData();
-        insert();
-        showData();
-
+        insertShow();
     }
-
     public static void getData(){
         Scanner scan = new Scanner(System.in);
         d.id =scan.next();
@@ -23,10 +18,9 @@ public class dbConnection {
         d.address =scan.next();
         d.tel =scan.next();
     }
-
-    public  static void  insert(){
+    public  static void  insertShow(){
         try {
-            String url="jdbc:mysql://localhost:3306/test";
+           String url="jdbc:mysql://localhost:3306/test";
             String admin="sandaruwan";
             String adminpwd="sandaruwanpwd";
             Connection conn=DriverManager.getConnection(url,admin,adminpwd);
@@ -34,23 +28,11 @@ public class dbConnection {
             Statement stat=conn.createStatement();
             String sql = "insert into customer values('"+d.id+"','"+d.name+"','"+d.address+"',"+d.tel+")";
             stat.executeUpdate(sql);
-        }catch (SQLException err){
-            System.out.println(err.getMessage());
-        }
-    }
 
-    public static void showData(){
-        try{
-            String url="jdbc:mysql://localhost:3306/test";
-            String admin="sandaruwan";
-            String adminpwd="sandaruwanpwd";
-
-            Connection conn=DriverManager.getConnection(url,admin,adminpwd);
-
-            Statement stat=conn.createStatement();
-            String sql="select *from customer";
-            ResultSet rs =stat.executeQuery(sql);
-            System.out.println("ID"+"  "+"Name"+"  "+"Address"+"  "+"Tel-Number");
+            Statement stat1=conn.createStatement();
+            String sql1="select *from customer";
+            ResultSet rs =stat1.executeQuery(sql1);
+            System.out.println("ID"+"     "+"Name"+"     "+"Address"+"       "+"Tel-Number");
             while(rs.next()){
                 String id=rs.getString("id");
                 String name=rs.getString("name");
